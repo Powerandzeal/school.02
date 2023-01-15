@@ -1,14 +1,13 @@
-package ru.hogwarts.school1.controller;
+package ru.hogwarts.school02.controller;
 
 import org.springframework.web.bind.annotation.*;
-import ru.hogwarts.school1.model.Faculty;
-import ru.hogwarts.school1.model.Student;
-import ru.hogwarts.school1.service.FacultyService;
+import ru.hogwarts.school02.model.Faculty;
+import ru.hogwarts.school02.service.FacultyService;
 
 import java.util.Collection;
 
 @RestController
-@RequestMapping("faculty")
+@RequestMapping("/faculty")
 public class FacultyController {
 private final FacultyService facultyService;
 
@@ -34,8 +33,8 @@ private final FacultyService facultyService;
     public Faculty getInfoFaculty(@PathVariable Long id) {
         return facultyService.getFaculty(id);
     }
-    @GetMapping("{color}")
-    public Collection<Faculty> getFacultyForColor(@PathVariable String color){
+    @GetMapping
+    public Collection<Faculty> getFacultyForColor(@RequestParam String color){
         return facultyService.getFacultyOnTheColor(color);
     }
 }

@@ -1,4 +1,4 @@
-package ru.hogwarts.school1.model;
+package ru.hogwarts.school02.model;
 
 import java.util.Objects;
 

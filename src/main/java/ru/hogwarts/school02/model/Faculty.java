@@ -1,6 +1,4 @@
-package ru.hogwarts.school1.model;
-
-import org.springframework.stereotype.Component;
+package ru.hogwarts.school02.model;
 
 import java.util.Objects;
 
