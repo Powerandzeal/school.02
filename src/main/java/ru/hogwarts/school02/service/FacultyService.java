@@ -39,7 +39,10 @@ public class FacultyService {
          facultyRepository.deleteById(id);
     }
 
-//    public Collection<Faculty> getFacultyOnTheColor(String color) {
+    //    public Collection<Faculty> getFacultyOnTheColor(String color) {
 //        return faculties.values().stream().filter(s->s.getColor().equals(color)).collect(Collectors.toList());
 //    }
+    public Collection<Faculty> getAllFaculties() {
+        return facultyRepository.findAll();
+    }
 }

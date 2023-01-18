@@ -38,7 +38,12 @@ public class FacultyController {
         if (faculty == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(faculty);
+    }
+
+    @GetMapping
+    public Collection<Faculty> getAllfaculties() {
+        return facultyService.getAllFaculties();
     }
 //    @GetMapping
 //    public Collection<Faculty> getFacultyForColor(@RequestParam String color){
