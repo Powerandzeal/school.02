@@ -25,8 +25,9 @@ public class StudentController {
     }
 
     @DeleteMapping("{id}")
-    public Student removeStudent(@PathVariable Long id) {
-        return studentService.deleteStudent(id);
+    public ResponseEntity removeStudent(@PathVariable Long id) {
+        studentService.deleteStudent(id);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping
@@ -34,10 +35,6 @@ public class StudentController {
         return studentService.updateStudent(student);
     }
 
-//        @GetMapping("{id}")
-//    public Student getInfoStudent(@PathVariable Long id) {
-//        return studentService.getStudent(id);
-//    }
     @GetMapping("{id}")
     public ResponseEntity<Student> getStudentInfo(@PathVariable Long id) {
         Student student = studentService.getStudent(id);
@@ -47,13 +44,13 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
-    @GetMapping
-    public ResponseEntity <Collection <Student>> findStudents(@RequestParam(required = false) int age) {
-        if (age > 0) {
-            return ResponseEntity.ok(studentService.getSameAgeStudent(age));
-        }
-        return ResponseEntity.ok(Collections.emptyList());
-    }
+//    @GetMapping
+//    public ResponseEntity <Collection <Student>> findStudents(@RequestParam(required = false) int age) {
+//        if (age > 0) {
+//            return ResponseEntity.ok(studentService.getSameAgeStudent(age));
+//        }
+//        return ResponseEntity.ok(Collections.emptyList());
+//    }
 
 //    @GetMapping
 //    public Collection<Student> getAllStudents() {
