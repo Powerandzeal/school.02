@@ -2,6 +2,7 @@ package ru.hogwarts.school02.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.hogwarts.school02.model.Faculty;
 import ru.hogwarts.school02.service.StudentService;
 import ru.hogwarts.school02.model.Student;
 import ru.hogwarts.school02.service.StudentService;
@@ -55,5 +56,32 @@ public class StudentController {
     @GetMapping
     public Collection<Student> getAllStudents() {
         return studentService.getAllStudents();
+    }
+
+    @GetMapping("/age")
+    public Collection<Student> findByAge(@RequestParam Integer age) {
+        return studentService.findByAge(age);
+    }
+
+    @GetMapping("/ageBetween")
+    public Collection<Student> findByAgeBetween(@RequestParam Integer minAge,
+                                                @RequestParam Integer maxAge) {
+        return studentService.findByAgeBetween(minAge, maxAge);
+    }
+
+        @GetMapping("/findStudentsByFacyltyName")
+    public Collection<Student> findByFacyltyName(@RequestParam String name
+    ) {
+        return studentService.findByFacultyName(name);
+//    }
+//    @GetMapping("/findStudentsByFacyltyColor")
+//    public Collection<Student> findByFacyltyColor(@RequestParam String color
+//    ) {
+//        return studentService.findByFacultiesColor(color);
+//    }
+//    @GetMapping("/findByFaculty_NameIgnoreCaseOrFaculty_ColorIgnoreCase")
+//    public Collection<Student> findByFacyltyColor(@RequestParam (required = false)String color,
+//                                                  @RequestParam (required = false)String name) {
+//        return studentService.findByFaculty_NameIgnoreCaseOrFaculty_ColorIgnoreCase(name,color);
     }
 }
