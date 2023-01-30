@@ -19,7 +19,6 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 
 @Service
-@Transactional
 public class AvatarService {
     @Value("${student.avatar.dir.path}")
     private String avatarDir;
@@ -50,33 +49,36 @@ public class AvatarService {
         avatar.setFilePath(filePath.toString());
         avatar.setFileSize(file.getSize());
         avatar.setMediaType(file.getContentType());
-        avatar.setData(generateAvatarPreview(filePath));
+//        avatar.setData(generateAvatarPreview(filePath));
 
         avatarRepository.save(avatar);
     }
+
     private String getExtensions(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
+
     public Avatar findAvatarById(Long avatarId) {
         return avatarRepository.findAvatarById(avatarId).orElse(new Avatar());
     }
 
-    private byte[] generateAvatarPreview(Path filePath) throws IOException {
-        try (InputStream is = Files.newInputStream(filePath);
-             BufferedInputStream bis = new BufferedInputStream(is, 1024);
-             ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-            BufferedImage image = ImageIO.read(bis);
-
-            int height = image.getHeight() / (image.getWidth() / 100);
-            BufferedImage preview = new BufferedImage(100, height, image.getType());
-            Graphics2D graphics = preview.createGraphics();
-            graphics.drawImage(image, 0, 0, 100, height, null);
-            graphics.dispose();
-
-            ImageIO.write(preview, getExtension(filePath.getFileName().toString()), baos);
-            return baos.toByteArray();
-        }
-    }
+//    private byte[] generateAvatarPreview(Path filePath) throws IOException {
+//        try (
+//                InputStream is = Files.newInputStream(filePath);
+//                BufferedInputStream bis = new BufferedInputStream(is, 1024);
+//                ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+//            BufferedImage image = ImageIO.read(bis);
+//
+//            int height = image.getHeight() / (image.getWidth() / 100);
+//            BufferedImage preview = new BufferedImage(100, height, image.getType());
+//            Graphics2D graphics = preview.createGraphics();
+//            graphics.drawImage(image, 0, 0, 100, height, null);
+//            graphics.dispose();
+//
+//            ImageIO.write(preview, getExtension(filePath.getFileName().toString()), baos);
+//            return baos.toByteArray();
+//        }
+//    }
 
 
     public String getExtension(String fileName) {
