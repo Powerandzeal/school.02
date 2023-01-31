@@ -1,29 +1,43 @@
 package ru.hogwarts.school02.model;
 
+import org.hibernate.annotations.Type;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Objects;
+
 @Entity
 public class Avatar {
     @Id
     @GeneratedValue
-    private Long id;
+    private long id;
 
     private String filePath;
     private long fileSize;
     private String mediaType;
     @Lob
-    byte [] data;
+    private byte[] data;
     @OneToOne
-    Student student;
+    private Student student;
 
-    public Long getId() {
+    public Avatar() {
+    }
+
+    public Avatar(long id, String filePath, long fileSize, String mediaType, byte[] data, Student student) {
+        this.id = id;
+        this.filePath = filePath;
+        this.fileSize = fileSize;
+        this.mediaType = mediaType;
+        this.data = data;
+        this.student = student;
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -39,7 +53,7 @@ public class Avatar {
         return fileSize;
     }
 
-    public void setFileSize(long fileSize) {
+    public void setFileSize(Long fileSize) {
         this.fileSize = fileSize;
     }
 
@@ -68,11 +82,23 @@ public class Avatar {
     }
 
     @Override
+    public String toString() {
+        return "Avatar{" +
+                "id=" + id +
+                ", filePath='" + filePath + '\'' +
+                ", fileSize=" + fileSize +
+                ", mediaType='" + mediaType + '\'' +
+                ", data=" + Arrays.toString(data) +
+                ", student=" + student +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Avatar avatar = (Avatar) o;
-        return fileSize == avatar.fileSize && Objects.equals(id, avatar.id) && Objects.equals(filePath, avatar.filePath) && Objects.equals(mediaType, avatar.mediaType) && Arrays.equals(data, avatar.data) && Objects.equals(student, avatar.student);
+        return id == avatar.id && Objects.equals(filePath, avatar.filePath) && Objects.equals(fileSize, avatar.fileSize) && Objects.equals(mediaType, avatar.mediaType) && Arrays.equals(data, avatar.data) && Objects.equals(student, avatar.student);
     }
 
     @Override
@@ -80,17 +106,5 @@ public class Avatar {
         int result = Objects.hash(id, filePath, fileSize, mediaType, student);
         result = 31 * result + Arrays.hashCode(data);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Avatar{" +
-                "id=" + id +
-                ", filePath='" + filePath + '\'' +
-                ", filesize=" + fileSize +
-                ", mediaType='" + mediaType + '\'' +
-                ", data=" + Arrays.toString(data) +
-                ", student=" + student +
-                '}';
     }
 }
