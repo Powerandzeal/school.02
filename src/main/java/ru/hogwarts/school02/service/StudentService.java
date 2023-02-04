@@ -1,49 +1,71 @@
-package ru.hogwarts.school1.service;
+package ru.hogwarts.school02.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.hogwarts.school1.model.Student;
+import ru.hogwarts.school02.model.Faculty;
+import ru.hogwarts.school02.model.Student;
+import ru.hogwarts.school02.repositories.StudentRepository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
 
-    private final HashMap<Long, Student> students = new HashMap<>();
-    private long lasrid = 0;
+    private StudentRepository studentRepository;
+
+    @Autowired
+    public StudentService(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
 
     public Student createStudent(Student student) {
-        student.setId(++lasrid);
-        students.put(lasrid, student);
-        return student;
+        return studentRepository.save(student);
     }
 
     public Student updateStudent(Student student) {
-        students.put(student.getId(), student);
-        students.get(lasrid);
-        return student;
+        return studentRepository.save(student);
     }
 
     public Student getStudent(long id) {
-        return students.get(id);
+        return studentRepository.findById(id).get();
     }
 
-    public Student deleteStudent(long id) {
-        return students.remove(id);
+    public void deleteStudent(long id) {
+        studentRepository.deleteById(id);
     }
-
-    public Collection<Student> getSameAgeStudent(int age) {
-        Collection<Student> stud =
-                students.
-                        values().
-                        stream().
-                        filter(s -> s.getAge() == age).
-                        collect(Collectors.toSet());
-        return stud;
-    }
+//public Collection<Student> getSameAgeStudent(int age) {
+//    return students.
+//            values()
+//            .stream()
+//            .filter(student -> student.getAge()==age)
+//            .collect(Collectors.toList());
+//
+//}
 
     public Collection<Student> getAllStudents() {
-        return students.values();
+        return studentRepository.findAll();
     }
+
+    public Collection<Student> findByName(String name) {
+        return studentRepository.findByName(name);
+    }
+
+    public Collection<Student> findByAge(Integer max) {
+        return studentRepository.findByAge(max);
+    }
+
+    public Collection<Student> findByAgeBetween(Integer minAge, Integer maxAge) {
+        return studentRepository.findByAgeBetween(minAge, maxAge);
+    }
+
+    public Collection<Student> findByFacultyName(String name) {
+        return studentRepository.findByFaculty_NameIgnoreCase(name);
+    }
+
+
+
 
 }

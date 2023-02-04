@@ -1,12 +1,14 @@
-package ru.hogwarts.school1.controller;
+package ru.hogwarts.school02.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.hogwarts.school1.model.Student;
-import ru.hogwarts.school1.service.StudentService;
+import ru.hogwarts.school02.model.Faculty;
+import ru.hogwarts.school02.service.StudentService;
+import ru.hogwarts.school02.model.Student;
+import ru.hogwarts.school02.service.StudentService;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Collections;
 
 @RestController
 @RequestMapping("/student")
@@ -24,8 +26,9 @@ public class StudentController {
     }
 
     @DeleteMapping("{id}")
-    public Student removeStudent(@PathVariable Long id) {
-        return studentService.deleteStudent(id);
+    public ResponseEntity removeStudent(@PathVariable Long id) {
+        studentService.deleteStudent(id);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping
@@ -33,10 +36,6 @@ public class StudentController {
         return studentService.updateStudent(student);
     }
 
-//        @GetMapping("/t{id}")
-//    public Student getInfoStudent(@PathVariable Long id) {
-//        return studentService.getStudent(id);
-//    }
     @GetMapping("{id}")
     public ResponseEntity<Student> getStudentInfo(@PathVariable Long id) {
         Student student = studentService.getStudent(id);
@@ -46,13 +45,43 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
-    @GetMapping("{age}")
-    public Collection<Student> getStudentsSameAge(@PathVariable Integer age) {
-        return studentService.getSameAgeStudent(age);
-    }
+//    @GetMapping
+//    public ResponseEntity <Collection <Student>> findStudents(@RequestParam(required = false) int age) {
+//        if (age > 0) {
+//            return ResponseEntity.ok(studentService.getSameAgeStudent(age));
+//        }
+//        return ResponseEntity.ok(Collections.emptyList());
+//    }
 
     @GetMapping
     public Collection<Student> getAllStudents() {
         return studentService.getAllStudents();
+    }
+
+    @GetMapping("/age")
+    public Collection<Student> findByAge(@RequestParam Integer age) {
+        return studentService.findByAge(age);
+    }
+
+    @GetMapping("/ageBetween")
+    public Collection<Student> findByAgeBetween(@RequestParam Integer minAge,
+                                                @RequestParam Integer maxAge) {
+        return studentService.findByAgeBetween(minAge, maxAge);
+    }
+
+        @GetMapping("/findStudentsByFacyltyName")
+    public Collection<Student> findByFacyltyName(@RequestParam String name
+    ) {
+        return studentService.findByFacultyName(name);
+//    }
+//    @GetMapping("/findStudentsByFacyltyColor")
+//    public Collection<Student> findByFacyltyColor(@RequestParam String color
+//    ) {
+//        return studentService.findByFacultiesColor(color);
+//    }
+//    @GetMapping("/findByFaculty_NameIgnoreCaseOrFaculty_ColorIgnoreCase")
+//    public Collection<Student> findByFacyltyColor(@RequestParam (required = false)String color,
+//                                                  @RequestParam (required = false)String name) {
+//        return studentService.findByFaculty_NameIgnoreCaseOrFaculty_ColorIgnoreCase(name,color);
     }
 }

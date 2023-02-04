@@ -1,18 +1,32 @@
-package ru.hogwarts.school1.model;
+package ru.hogwarts.school02.model;
 
-import org.springframework.stereotype.Component;
+import org.hibernate.annotations.GeneratorType;
 
+import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
+@Entity
 public class Faculty {
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
+//            (strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private String color;
+
+    @OneToMany(mappedBy = "faculty")
+    private Set<Student> student;
 
     public Faculty(long id, String name, String color) {
         this.id = id;
         this.name = name;
         this.color = color;
+    }
+
+    public Faculty() {
+
     }
 
     public long getId() {
