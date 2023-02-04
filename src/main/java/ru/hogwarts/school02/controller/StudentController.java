@@ -45,6 +45,23 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
+    @GetMapping("/studentgreeting")
+    public String testApi() {
+        return "hello student";
+    }
+    @GetMapping("/count")
+    public int countStudents() {
+        return studentService.getCountStudents();
+    }
+    @GetMapping("/averageAge")
+    public int averageAgeOfStudents() {
+        return studentService.getAverageAgeByStudents();
+    }
+    @GetMapping("/lastFiveStudents")
+    public Collection<Student> showLastFiveStudents() {
+        return studentService.getLastFiveStudents();
+    }
+
 //    @GetMapping
 //    public ResponseEntity <Collection <Student>> findStudents(@RequestParam(required = false) int age) {
 //        if (age > 0) {
@@ -70,9 +87,9 @@ public class StudentController {
     }
 
         @GetMapping("/findStudentsByFacyltyName")
-    public Collection<Student> findByFacyltyName(@RequestParam String name
-    ) {
-        return studentService.findByFacultyName(name);
+    public Collection<Student> findByFacyltyName(@RequestParam String name) {
+            return studentService.findByFacultyName(name);
+        }
 //    }
 //    @GetMapping("/findStudentsByFacyltyColor")
 //    public Collection<Student> findByFacyltyColor(@RequestParam String color
@@ -83,5 +100,5 @@ public class StudentController {
 //    public Collection<Student> findByFacyltyColor(@RequestParam (required = false)String color,
 //                                                  @RequestParam (required = false)String name) {
 //        return studentService.findByFaculty_NameIgnoreCaseOrFaculty_ColorIgnoreCase(name,color);
-    }
+
 }
