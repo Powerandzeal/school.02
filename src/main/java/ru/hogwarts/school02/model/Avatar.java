@@ -10,7 +10,7 @@ import java.util.Objects;
 @Entity
 public class Avatar {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy =GenerationType.SEQUENCE)
     private long id;
 
     private String filePath;
@@ -29,7 +29,6 @@ public class Avatar {
         this.filePath = filePath;
         this.fileSize = fileSize;
         this.mediaType = mediaType;
-        this.data = data;
         this.student = student;
     }
 

@@ -1,32 +1,28 @@
 package ru.hogwarts.school02.model;
 
-import org.hibernate.annotations.GeneratorType;
-
 import javax.persistence.*;
-import java.util.List;
+import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
 public class Faculty {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
-//            (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy =GenerationType.TABLE)
     private long id;
     private String name;
     private String color;
 
     @OneToMany(mappedBy = "faculty")
-    private Set<Student> student;
+    private Collection<Student> student;
 
-    public Faculty(long id, String name, String color) {
+    public Faculty() {
+    }
+
+    public Faculty(long id, String name, String color, Collection<Student> student) {
         this.id = id;
         this.name = name;
         this.color = color;
-    }
-
-    public Faculty() {
-
     }
 
     public long getId() {
@@ -52,6 +48,8 @@ public class Faculty {
     public void setColor(String color) {
         this.color = color;
     }
+
+
 
     @Override
     public boolean equals(Object o) {
