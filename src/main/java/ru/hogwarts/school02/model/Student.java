@@ -6,7 +6,7 @@ import java.util.Objects;
 @Entity
 public class Student {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy =GenerationType.SEQUENCE)
     private long id;
     private String name;
     private int age;
@@ -15,14 +15,13 @@ public class Student {
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 
-    public Student(long id, String name, int age) {
+    public Student() {
+    }
+
+    public Student(long id, String name, int age, Faculty faculty) {
         this.id = id;
         this.name = name;
         this.age = age;
-    }
-
-    public Student() {
-
     }
 
     public long getId() {
@@ -69,5 +68,13 @@ public class Student {
                 ", name='" + name + '\'' +
                 ", age=" + age +
                 '}';
+    }
+
+    public Faculty getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
     }
 }

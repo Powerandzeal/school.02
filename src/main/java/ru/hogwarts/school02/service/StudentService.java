@@ -65,7 +65,16 @@ public class StudentService {
         return studentRepository.findByFaculty_NameIgnoreCase(name);
     }
 
+    public int getCountStudents() {
+        return studentRepository.getAmountStudents();
+    }
 
+    public int getAverageAgeByStudents() {
+        return studentRepository.getAverageAgeStudents();
+    }
 
+    public Collection<Student> getLastFiveStudents() {
+        return studentRepository.getLastFiveStudents();
+    }
 
 }

@@ -1,6 +1,7 @@
 package ru.hogwarts.school02.service;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school02.model.Avatar;
@@ -14,7 +15,9 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Files;
+import java.util.Collection;
 import java.util.Objects;
+import java.util.Optional;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
@@ -63,6 +66,9 @@ public class AvatarService {
     public Avatar findAvatarById(Long avatarId) {
         return avatarRepository.findAvatarById(avatarId).orElse(new Avatar());
     }
+    public Avatar findByStudentId(Long studentId) {
+        return avatarRepository.findByStudentId(studentId).orElse(new Avatar());
+    }
 
     private byte[] generateAvatarPreview(Path filePath) throws IOException {
         try (
@@ -86,5 +92,18 @@ public class AvatarService {
     public String getExtension(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
+
+    public Optional<Avatar> getAllAvatars() {
+        return avatarRepository.getAllBy();
+    }
+
+    public Collection<Avatar> getAllAvatars(Integer pageNum, Integer pageSize) {
+        PageRequest request = PageRequest.of(pageNum - 1, pageSize);
+        return avatarRepository.findAll(request).getContent();
+    }
+
+
+
+
 
 }
