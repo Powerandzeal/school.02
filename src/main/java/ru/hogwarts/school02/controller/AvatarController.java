@@ -91,7 +91,7 @@ public class AvatarController {
 //                                                     @RequestParam("size") Integer pageSize) {
 //        List<Avatar> avatars = avatarService.getAllAvatars(pageNumber,pageSize)
 //    }
-    @GetMapping("getAllAvatars")
+    @GetMapping("getAllAvatarsWithPagination")
     public Optional<Avatar> getAllAvatar() {
         return avatarService.getAllAvatars();
     }
