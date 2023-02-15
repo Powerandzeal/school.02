@@ -1,5 +1,7 @@
 package ru.hogwarts.school02.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,7 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Service
 @Transactional
 public class AvatarService {
+    Logger logger = LoggerFactory.getLogger(AvatarService.class);
     @Value("${student.avatar.dir.path}")
     private String avatarDir;
     private final StudentService studentService;
@@ -36,6 +39,7 @@ public class AvatarService {
     }
 
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
+        logger.info("Requesting avatar");
         Student student = studentService.getStudent(studentId);
         Path filePath = Path.of(avatarDir, studentId + "." + getExtensions(Objects.requireNonNull(avatarFile.getOriginalFilename())));
         Files.createDirectories(filePath.getParent());
@@ -58,19 +62,23 @@ public class AvatarService {
     }
 
     private String getExtensions(String fileName) {
+        logger.info("get Extension file name {}",fileName);
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
 
 
     public Avatar findAvatarById(Long avatarId) {
+        logger.info("Find avatary by id {}",avatarId);
         return avatarRepository.findAvatarById(avatarId).orElse(new Avatar());
     }
     public Avatar findByStudentId(Long studentId) {
+        logger.info("Find student by id {}",studentId);
         return avatarRepository.findByStudentId(studentId).orElse(new Avatar());
     }
 
     private byte[] generateAvatarPreview(Path filePath) throws IOException {
+        logger.info("generate Avatar Preview");
         try (
                 InputStream is = Files.newInputStream(filePath);
                 BufferedInputStream bis = new BufferedInputStream(is, 1024);
@@ -90,14 +98,19 @@ public class AvatarService {
 
 
     public String getExtension(String fileName) {
+        logger.info("get Extension file name {}",fileName);
+
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
     public Optional<Avatar> getAllAvatars() {
+        logger.info("get all avatars");
+
         return avatarRepository.getAllBy();
     }
 
     public Collection<Avatar> getAllAvatars(Integer pageNum, Integer pageSize) {
+        logger.info("get all avatars");
         PageRequest request = PageRequest.of(pageNum - 1, pageSize);
         return avatarRepository.findAll(request).getContent();
     }
