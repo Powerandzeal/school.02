@@ -9,6 +9,9 @@ import ru.hogwarts.school02.repositories.FacultyRepository;
 
 
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class FacultyService {
@@ -57,4 +60,23 @@ public class FacultyService {
         logger.info("find faculty by nama {}",name);
        return  facultyRepository.findByStudent_Name(name);
     }
+
+    public Optional<String> getLongerNameFaculty1() {
+        logger.info("getLongerNameFaculty");
+        return facultyRepository
+                .findAll()
+                .stream()
+                .map(Faculty::getName)
+                .max(Comparator.comparing(String::length));
+    }
+    //    public String getLongerNameFaculty() {
+//        logger.info("getLongerNameFaculty");
+//        return String.valueOf(facultyRepository
+//                .findAll()
+//                .stream()
+//                .max(Comparator.comparing(s->s.getName().length())));
+//    }
+
+
+
 }
