@@ -17,6 +17,7 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
     Collection<Student> findByFaculty_NameIgnoreCase(String name);
     Collection<Student> findByFaculty_NameIgnoreCaseOrFaculty_ColorIgnoreCase(String name,String color);
 
+
     @Query(value = "select count(*) from student",nativeQuery = true)
     int getAmountStudents();
     @Query(value = "SELECT avg(age) from student",nativeQuery = true)

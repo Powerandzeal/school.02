@@ -2,13 +2,11 @@ package ru.hogwarts.school02.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.hogwarts.school02.model.Faculty;
 import ru.hogwarts.school02.service.StudentService;
 import ru.hogwarts.school02.model.Student;
-import ru.hogwarts.school02.service.StudentService;
 
 import java.util.Collection;
-import java.util.Collections;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/student")
@@ -90,6 +88,23 @@ public class StudentController {
     public Collection<Student> findByFacyltyName(@RequestParam String name) {
             return studentService.findByFacultyName(name);
         }
+
+    @GetMapping("getStudentWhereNameStartsWithAlphA")
+    public Stream<String> getStudentWhereNameStartsWithAlphA() {
+        return studentService.getStudentWhereNameStartsWithAlphA();
+    }
+    @GetMapping("getStudentAverageAge")
+    public double getStudentAverageAge () {
+        return studentService.getAverageAge();
+    }
+    @GetMapping("Phomula")
+    public long phormula () {
+        return studentService.phormula1();
+    }
+    @GetMapping("Phomula2")
+    public long phormula2 () {
+        return studentService.phormula2();
+    }
 //    }
 //    @GetMapping("/findStudentsByFacyltyColor")
 //    public Collection<Student> findByFacyltyColor(@RequestParam String color

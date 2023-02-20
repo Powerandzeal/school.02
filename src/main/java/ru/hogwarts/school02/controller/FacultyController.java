@@ -6,6 +6,7 @@ import ru.hogwarts.school02.model.Faculty;
 import ru.hogwarts.school02.service.FacultyService;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/faculty")
@@ -55,5 +56,9 @@ public class FacultyController {
     @GetMapping("/findByStudentName")
     public Faculty findByStudentName(@RequestParam String name) {
         return facultyService.findByStudentName(name);
+    }
+    @GetMapping("/findBiggestNameFaculty")
+    public Optional<String> findBiggestNameFaculty1() {
+        return facultyService.getLongerNameFaculty1();
     }
 }
