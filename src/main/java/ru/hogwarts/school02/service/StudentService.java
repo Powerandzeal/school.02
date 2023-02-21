@@ -8,6 +8,7 @@ import ru.hogwarts.school02.model.Student;
 import ru.hogwarts.school02.repositories.StudentRepository;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -131,7 +132,81 @@ public class StudentService {
                 .limit(1_000_000)
                 .reduce(0, (a, b) -> a + b);
         return System.currentTimeMillis() - start2;
+    }
+
+    public String get(int id) {
+
+        String s = "";
+        for (int i = 0; i < 100_000; i++) {
+            s += i;
+
+        }
+        return studentRepository.findAll().get(id).getName();
+    }
+
+    public void getListNameStudentsFromThread() {
+        Collection<String> list = studentRepository
+                .findAll()
+                .stream()
+                .map(Student::getName)
+                .collect(Collectors.toList());
+        System.out.println();
+        System.out.println("Это порядок коллекции");
+        System.out.println(list);
+        System.out.println("_______________________");
+        System.out.println("Это порядок разных потоков");
+        System.out.println(get(0));
+        System.out.println(get(1));
+
+        new Thread(() -> {
+            System.out.println(get(2));
+            System.out.println(get(3));
+
+        }).start();
+
+        new Thread(() -> {
+            System.out.println(get(4));
+            System.out.println(get(5));
+
+        }).start();
 
     }
+    public synchronized void getListNameStudentsSynchronizedThread() {
+        Collection<String> list = studentRepository
+                .findAll()
+                .stream()
+                .map(Student::getName)
+                .collect(Collectors.toList());
+        System.out.println();
+        System.out.println("Это порядок коллекции");
+        System.out.println(list);
+        System.out.println("_______________________");
+        System.out.println("Это порядок  c синхронизироваными потоками");
+        System.out.println(get(0));
+        System.out.println(get(1));
+
+        new Thread(() -> {
+            System.out.println(get(2));
+            System.out.println(get(3));
+
+        }).start();
+
+        new Thread(() -> {
+            System.out.println(get(4));
+            System.out.println(get(5));
+
+        }).start();
+
+    }
+
+
+//     new Thread((
+//    })
+    //        Collection<String> list = studentRepository
+//                .findAll()
+//                .stream()
+//                .map(Student::getName)
+//                .collect(Collectors.toList());
+//        System.out.println(list);
 
 }

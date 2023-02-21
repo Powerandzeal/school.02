@@ -106,6 +106,16 @@ public class StudentController {
         return studentService.phormula2();
     }
 //    }
+
+    @GetMapping("getListNameStudents")
+    public void getListName () {
+        studentService.getListNameStudentsFromThread();
+    }
+    @GetMapping("getListNameStudentsSynchronized")
+    public void getListNameSynchronized () {
+        studentService.getListNameStudentsSynchronizedThread();
+    }
+//    }
 //    @GetMapping("/findStudentsByFacyltyColor")
 //    public Collection<Student> findByFacyltyColor(@RequestParam String color
 //    ) {
