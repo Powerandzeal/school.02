@@ -134,7 +134,7 @@ public class StudentService {
         return System.currentTimeMillis() - start2;
     }
 
-    public String get(int id) {
+    public  String get(int id) {
 
         String s = "";
         for (int i = 0; i < 100_000; i++) {
@@ -171,7 +171,16 @@ public class StudentService {
         }).start();
 
     }
-    public synchronized void getListNameStudentsSynchronizedThread() {
+    public synchronized String get1(int id) {
+
+        String s = "";
+        for (int i = 0; i < 100_000; i++) {
+            s += i;
+
+        }
+        return studentRepository.findAll().get(id).getName();
+    }
+    public  void getListNameStudentsSynchronizedThread() {
         Collection<String> list = studentRepository
                 .findAll()
                 .stream()
@@ -182,18 +191,18 @@ public class StudentService {
         System.out.println(list);
         System.out.println("_______________________");
         System.out.println("Это порядок  c синхронизироваными потоками");
-        System.out.println(get(0));
-        System.out.println(get(1));
+        System.out.println(get1(0));
+        System.out.println(get1(1));
 
         new Thread(() -> {
-            System.out.println(get(2));
-            System.out.println(get(3));
+            System.out.println(get1(2));
+            System.out.println(get1(3));
 
         }).start();
 
         new Thread(() -> {
-            System.out.println(get(4));
-            System.out.println(get(5));
+            System.out.println(get1(4));
+            System.out.println(get1(5));
 
         }).start();
 
